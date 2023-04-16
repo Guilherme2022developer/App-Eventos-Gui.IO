@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Eventos.IO.Domain.Core\Eventos.IO.Domain.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Eventos\Repository\" />
+    <Folder Include="Organizadores\COMMANDS\" />
+    <Folder Include="Organizadores\EVENTS\" />
+    <Folder Include="Organizadores\REPOSITORY\" />
+  </ItemGroup>
+
+</Project>

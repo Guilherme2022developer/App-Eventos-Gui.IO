@@ -1,0 +1,154 @@
+﻿@model Eventos.IO.Application.VIEWMODELS.EventoViewModel
+
+<div style="padding-top: 20px">
+    <div>
+        <hr />
+        <h4>Endereço</h4>
+    </div>
+
+    @if (Model.Endereco != null)
+    {
+        <table class="table table-hover">
+            <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Endereco.Logradouro)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Endereco.Numero)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Endereco.Complemento)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Endereco.Bairro)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Endereco.CEP)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Endereco.Cidade)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Endereco.Estado)
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Endereco.Logradouro)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Endereco.Numero)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Endereco.Complemento)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Endereco.Bairro)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Endereco.CEP)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Endereco.Cidade)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Endereco.Estado)
+                </td>
+                <td>
+                    <a asp-action="AtualizarEnderecoObter" asp-route-id="@Model.Id" class="btn btn-info" data-toggle="modal" data-target="#myModalAtualizar">
+                        <span title="Editar" class="fa fa-pencil-alt"></span>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    }
+    else
+    {
+        <table class="table">
+            <tr>
+                <td>
+                    <a supress-by-action="Edit,IncluirEndereco" asp-action="IncluirEndereco" asp-route-id="@Model.Id" class="btn btn-info" data-toggle="modal" data-target="#myModal">
+                        <span title="Editar" class="fa fa-plus-circle"> Adicionar Endereço</span>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    }
+
+</div>
+
+@*inserir Endereço*@
+<div id="myModal" class="modal fade in">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" id="modalteste">
+                <h4 class="modal-title">@ViewData["Title"]</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span><span class="sr-only">Fechar</span>
+                </button>
+            </div>
+            <form asp-action="Adicionar Endereço">
+                <div class="modal-body">
+
+                    <partial name="_Endereco" />
+
+                    <div class="modal-footer">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Adicionar Endereço" class="btn btn-success" />
+                            <input type="button" class="btn btn-info" value="Fechar" data-dismiss="modal" />
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div id="myModalAtualizar" class="modal fade in">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" id="modalteste">
+                <h4 class="modal-title">@ViewData["Title"]</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span><span class="sr-only">Fechar</span>
+                </button>
+            </div>
+            <form asp-action="Atualizar Endereço">
+                <div class="modal-body">
+
+                    <partial name="_Endereco" />
+
+                    <div class="modal-footer">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Adicionar Endereço" class="btn btn-success" />
+                            <input type="button" class="btn btn-info" value="Fechar" data-dismiss="modal" />
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        ValidacoesEvento();
+        $(document).ready(function () {
+            SetModal();
+        });
+
+    </script>
+}

@@ -1,0 +1,136 @@
+﻿@model Eventos.IO.Application.VIEWMODELS.EventoViewModel
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h4>Editar Evento</h4>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
+<hr />
+<div class="row">
+    <div class="col-md-4">   
+        <form asp-action="Edit">
+            <h4>Lembre-se que muitas pessoas já podem ter visto este evento antes de mudar as datas e etc</h4>
+            <hr/>
+            <VC:summary/>
+            <input type="hidden" asp-for="Id"/>
+            <input type="hidden" asp-for="OrganizadorId"/>
+            <div class="form-group">
+                <label asp-for="Nome" class="control-label"></label>
+                <input asp-for="Nome" class="form-control"/>
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DescricaoCurta" class="control-label"></label>
+                <input asp-for="DescricaoCurta" class="form-control"/>
+                <span asp-validation-for="DescricaoCurta" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DescricaoLonga" class="control-label"></label>
+                <textarea rows="5" asp-for="DescricaoLonga" class="form-control"></textarea>
+                <span asp-validation-for="DescricaoLonga" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Categoria" class="control-label"></label>
+                @Html.Partial("_Categoria")
+                <span asp-validation-for="Categoria" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DataInicio" class="control-label"></label>
+                <input asp-for="DataInicio" type="text" asp-format="{0:dd/MM/yyyy}" class="form-control"/>
+                <span asp-validation-for="DataInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataFim" class="control-label"></label>
+                <input asp-for="DataFim" type="text" asp-format="{0:dd/MM/yyyy}" class="form-control"/>
+                <span asp-validation-for="DataFim" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Gratuito"/> @Html.DisplayNameFor(model => model.Gratuito)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Valor" class="control-label"></label>
+                <input asp-for="Valor" class="form-control"/>
+                <span asp-validation-for="Valor" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Online"/> @Html.DisplayNameFor(model => model.Online)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="NomeEmpresa" class="control-label"></label>
+                <input asp-for="NomeEmpresa" class="form-control"/>
+                <span asp-validation-for="NomeEmpresa" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-success"/>
+                <a asp-action="Index" class="btn btn-danger">Voltar para a lista</a>
+            </div>
+        </form>
+        
+    </div>
+</div>
+
+<div id="EnderecoForm">
+    <div id="EnderecoTarget">
+        @Html.Partial("_DetalhesEndereco")
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.pt-BR.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.pt.min.js" type="text/javascript"></script>
+    <script>
+        ValidacoesEvento();
+        $(document).ready(function () {
+            SetModal();
+        });
+
+    </script>
+
+
+    @{
+        if (ViewBag.RetornoPost != null)
+        {
+
+            var notificacao = ViewBag.RetornoPost.ToString().Split(',');
+
+            <script>
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": true,
+                    "newestOnTop": false,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": true,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                Command: toastr["@notificacao[0]"]("@notificacao[1]");
+            </script>
+
+        }
+    }
+}

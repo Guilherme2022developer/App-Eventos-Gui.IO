@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Eventos.IO.Application.VIEWMODELS.EventoViewModel>
+@{
+    ViewData["Title"] = "Meus Eventos";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-left">
+            <a asp-action="Create" class="btn btn-primary">
+                <span title="Novo Evento" class="fa fa-plus"></span> Novo Evento
+            </a>
+        </div>
+    </div>
+</div>
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataInicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataFim)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Valor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Online)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @item.DataInicio.ToString("d")
+                </td>
+                <td>
+                    @item.DataFim.ToString("d")
+                </td>
+                <td>
+                    @{
+                        if (item.Gratuito)
+                        {
+                            @Html.DisplayName("Gratuito")
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelitem => item.Valor)
+                        }
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Online)
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">
+                        <span class="fa fa-pencil-alt"></span>
+                    </a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">
+                        <span class="fa fa-search"></span>
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">
+                        <span class="fa fa-trash"></span>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
