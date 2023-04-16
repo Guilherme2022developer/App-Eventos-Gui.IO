@@ -54,7 +54,8 @@ public class AuthController : BaseController
 
         return Response(registrerUser);
     }
-
+    [HttpPost]
+    [AllowAnonymous]
     [Route("entrar")]
     public async Task<IActionResult> Logar(LoginUserViewModel logarModel)
     {

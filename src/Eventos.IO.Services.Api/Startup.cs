@@ -53,7 +53,7 @@ public class Startup
             {
                 Version = "V1",
                 Title = "Eventos.Io API",
-                Description = "API do site Evntos",
+                Description = "API do site Eventos",
                 Contact = new OpenApiContact() { Name = "Guilherme", Email = "guilhermealves458@gmail.com" }
             });
 

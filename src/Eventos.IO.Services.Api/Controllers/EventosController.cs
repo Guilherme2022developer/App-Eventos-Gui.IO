@@ -45,7 +45,7 @@ public class EventosController : BaseController
 
     [HttpGet]
     [AllowAnonymous]
-    [Route("eventos/{id:guid}")]
+    [Route("eventos/obter-categorias")]
     public IEnumerable<CategoriaViewModel> ObterCategorias()
     {
         return _mapper.Map<IEnumerable<CategoriaViewModel>>(_eventoRepository.ObterCategorias());
@@ -85,7 +85,7 @@ public class EventosController : BaseController
 
     [HttpDelete]
     [Authorize] //TODO : colocar policy
-    [Route("evento-atualizar")]
+    [Route("evento-delete")]
     public IActionResult Delete(Guid id)
     {
         _eventoAppService.Excluir(id);

@@ -33,32 +33,32 @@ public class AccountController : BaseController
     }
 
 
-    [HttpPost]
-    [AllowAnonymous]
-    [Route("nova-conta")]
-    public async Task<IActionResult> Register([FromBody] OrganizadorViewModel model, int version)
-    {
-        if (version == 2)
-        {
-            return Response(new {Message = "API V2  não disponível" });
-        }
+    //[HttpPost]
+    //[AllowAnonymous]
+    //[Route("nova-conta")]
+    //public async Task<IActionResult> Register([FromBody] OrganizadorViewModel model, int version)
+    //{
+    //    if (version == 2)
+    //    {
+    //        return Response(new {Message = "API V2  não disponível" });
+    //    }
 
 
-        if (!ModelState.IsValid)
-        {
-           // NotificarErroModelInvalida();
-            return Response(model);
-        }
+    //    if (!ModelState.IsValid)
+    //    {
+    //       // NotificarErroModelInvalida();
+    //        return Response(model);
+    //    }
            
 
        
-        var  registroCommand = new RegistrarOrganizadorCommand(model.Id, model.Nome,model.CPF,model.Email);
-        _bus.SendCommand(registroCommand);
+    //    var  registroCommand = new RegistrarOrganizadorCommand(model.Id, model.Nome,model.CPF,model.Email);
+    //    _bus.SendCommand(registroCommand);
 
-        return Response(model);
+    //    return Response(model);
 
 
-    }
+    //}
 
     //[HttpPost]
     //[AllowAnonymous]
