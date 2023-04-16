@@ -34,7 +34,7 @@ public class AuthController : BaseController
 
         var user = new ApplicationUser
         {
-            UserName = registrerUser.Email,
+            UserName = registrerUser.Email ,
             Email = registrerUser.Email,
             EmailConfirmed = true
         };
