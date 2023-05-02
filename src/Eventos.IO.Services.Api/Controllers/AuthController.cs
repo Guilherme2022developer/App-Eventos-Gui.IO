@@ -22,8 +22,13 @@ public class AuthController : BaseController
     [HttpPost]
     [AllowAnonymous]
     [Route("registrar-nova-conta")]
-    public async Task<IActionResult> Registrar(RegistrerUserViewmodel registrerUser)
+    public async Task<IActionResult> Registrar([FromBody] RegistrerUserViewmodel registrerUser, int version)
     {
+
+        if (version == 2)
+        {
+            return Response(new { Message = "API V2  não disponível" });
+        }
 
         if (!ModelState.IsValid)
         {
@@ -43,7 +48,10 @@ public class AuthController : BaseController
 
         if (result.Succeeded)
         {
-            await _signInManager.SignInAsync(user,false);
+            var token = UserService.GenereteToken(registrerUser);
+            registrerUser.Token = token;
+            registrerUser.Password = null;
+
             return Response(registrerUser);
         }
 
@@ -69,6 +77,8 @@ public class AuthController : BaseController
 
         if (result.Succeeded)
         {
+            //var token = UserService.GenereteToken(logarModel);
+            //logarModel.Token = token;
             return Response(logarModel);
         }
 

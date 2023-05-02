@@ -10,7 +10,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using ApplicationDbContext = Eventos.IO.Services.Api.Data.ApplicationDbContext;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Eventos.IO.Services.Api;
 
@@ -62,10 +67,29 @@ public class Startup
         // Add application services.
         services.AddTransient<IEmailSender, EmailSender>();
         services.AddScoped<IUser, AspNetUser>();
-
+        services.AddCors();
         RegisterServices(services);
 
+        byte[] key = Encoding.ASCII.GetBytes(Settings.Secret);
+        services.AddAuthentication(x =>
+        {
+            x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(x =>
+        {
+            x.RequireHttpsMetadata = false;
+            x.SaveToken = true;
+            x.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = false,
+                ValidateAudience = false
+            };
+        });
+
     }
+
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHttpContextAccessor accessor)
@@ -79,12 +103,17 @@ public class Startup
         {
             app.UseExceptionHandler("/erro/500");
             app.UseStatusCodePagesWithRedirects("/erro/{0}");
-            app.UseHsts();
+           // app.UseHsts();
         }
-        app.UseHttpsRedirection();
+        //app.UseHttpsRedirection();
         app.UseStaticFiles();
 
         app.UseRouting();
+
+        app.UseCors(builder => builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
 
         app.UseAuthentication();
         app.UseAuthorization();
@@ -108,4 +137,11 @@ public class Startup
     {
         NativeInjectorBootStrapper.RegisterServices(services);
     }
+}
+
+public static class Settings
+{
+    public static string Secret = "43e4dbf0-52ed-4203-895d-42b586496bd4";
+
+
 }
