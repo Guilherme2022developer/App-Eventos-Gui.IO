@@ -28,11 +28,21 @@ public class EventosController : BaseController
     }
 
     [HttpGet]
-    [Route("eventos")]
+    [Route("eventos/obter-todos")]
     [AllowAnonymous]
     public IEnumerable<EventoViewModel> Get()
     {
         return _eventoAppService.ObterTodos();
+    }
+
+
+    [HttpGet]
+    [Authorize]
+    [Route("eventos/meus-eventos")]
+    public IEnumerable<EventoViewModel> GetMeusEventos()
+    {
+        return _eventoAppService.ObterEventoPorOrganizador(OrganizadorId);
+
     }
 
     [HttpGet]

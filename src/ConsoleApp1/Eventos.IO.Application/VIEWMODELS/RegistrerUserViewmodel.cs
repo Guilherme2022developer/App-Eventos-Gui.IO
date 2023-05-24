@@ -29,7 +29,7 @@ public class RegistrerUserViewmodel
 
 public class LoginUserViewModel
 {
-   // public Guid? Id { get; set; }
+     public Guid? Id { get; set; }
 
     [Required(ErrorMessage = "O campo {0}´é obrigatatório")]
     [EmailAddress(ErrorMessage = "O campo {0} está em formato inválido")]
@@ -40,8 +40,8 @@ public class LoginUserViewModel
     [StringLength(100, ErrorMessage = "O campo {0} precisa ter entre {2} e ,mi{1} caracteres", MinimumLength = 6)]
     public string Password { get; set; }
 
-    public string Token { get; set; }
+    public string? Token { get; set; }
 
-    public string role { get; set; }
+    public string? role { get; set; }
 
 }

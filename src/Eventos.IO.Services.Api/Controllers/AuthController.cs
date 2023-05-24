@@ -77,8 +77,8 @@ public class AuthController : BaseController
 
         if (result.Succeeded)
         {
-            //var token = UserService.GenereteToken(logarModel);
-            //logarModel.Token = token;
+             var token = UserService.GenereteTokenEntrar(logarModel);
+             logarModel.Token = token;
             return Response(logarModel);
         }
 
